@@ -26,13 +26,20 @@ const styles = StyleSheet.create({
     label: {
         paddingHorizontal: 5,
         alignSelf: 'center',
+        fontSize: 18,
+        color: '#fff'
+    },
+    
+    input: {
+        height: 48,
+        width: 300,
+        borderRadius: 5,
+        backgroundColor: '#fff',
+        marginVertical: 10,
+        marginLeft: 10,
+        paddingLeft: 16,
         fontSize: 18
     },
-    input: {
-        height: 40,
-        flex: 1,
-        fontSize: 18
-    }
 });
 
 export {Input};

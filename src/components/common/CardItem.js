@@ -9,12 +9,12 @@ const CardItem = ({ children }) => {
 
 const styles = StyleSheet.create({
     container: {
-        borderBottomWidth: 1,
+        margin: 10,
+        borderRadius: 5,
         padding: 5,
-        backgroundColor: '#fff',
+        backgroundColor: '#788eec',
         justifyContent: 'flex-start',
         flexDirection: 'row',
-        borderColor: '#ddd',
         position: 'relative'
     }
 });

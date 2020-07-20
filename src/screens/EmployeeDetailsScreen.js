@@ -9,6 +9,11 @@ const EmployeeDetailsScreen = () => {
     );
 };
 
+EmployeeDetailsScreen.navigationOptions = {
+    headerBackTitle: 'Back to List',
+    headerStyle: { backgroundColor: '#eb5352' }
+};
+
 const styles = StyleSheet.create({});
 
 export default EmployeeDetailsScreen;

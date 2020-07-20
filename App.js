@@ -1,5 +1,4 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
 
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -10,53 +9,87 @@ import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import reducers from './src/reducers';
 
+import { firebase } from './src/services/firebase';
+
+import { setNavigator } from './src/navigationRef';
+
 import LoginScreen from './src/screens/LoginScreen';
 import AccountScreen from './src/screens/AccountScreen';
 import EmployeeListScreen from './src/screens/EmployeeListScreen';
 import EmployeeDetailsScreen from './src/screens/EmployeeDetailsScreen';
+import CreateScreen from './src/screens/CreateScreen';
 
+import { Spinner } from './src/components/common';
+import { FontAwesome } from '@expo/vector-icons';
 
-// The first navigator we have to switch from loginScreen to another screen 
-// when the user is logged
-const switchNavigator = createSwitchNavigator({
-  // Listing the different things that this switchNavigator is going to 
-  // display
-  Login: LoginScreen,
-  mainFlow: createBottomTabNavigator({
-    // Then inside this BottomTabNavigator, we want a stack navigator 
-    // and another screen 
-    employeeFlow: createStackNavigator({
-      EmployeeList: EmployeeListScreen,
-      EmployeeDetails: EmployeeDetailsScreen
-    }),
-    Account: AccountScreen
-  })
-});
+const mainFlow = createStackNavigator(
+  {
+  List: EmployeeListScreen,
+  Details: EmployeeDetailsScreen,
+  Create: CreateScreen
+  }
+);
 
-// export default function App() {
-//   return (
-//     <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
-//       <View style={styles.containerStyle}>
-//         <LoginScreen />
-//       </View>
-//     </Provider>
-//   );
-// }
+mainFlow.navigationOptions = {
+  title: "List",
+  tabBarIcon: <FontAwesome name="th-list" size={20}/>,
+};
 
-// const styles = StyleSheet.create({
-//   containerStyle: {
-//     flex: 1,
-//     backgroundColor: '#eb5352'
-//   }
-// });
+const bottomTabNavigator = createBottomTabNavigator(
+  {
+  mainFlow: mainFlow,
+  Account: AccountScreen
+  },
+  {
+    tabBarOptions: {
+      style: {
+        backgroundColor: '#788eec'
+      },
+      activeTintColor: '#e91e63',
+      inactiveTintColor: '#fff'
+    }
+  }
+);
 
-const App = createAppContainer(switchNavigator);
+const NavApp = createAppContainer(bottomTabNavigator);
 
-export default () => {
+export default function App() {
+  const [loggedIn, setLoggedIn] = useState(null);
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      setLoggedIn(true);
+    } else { 
+      setLoggedIn(false);
+    }
+  });
+
+  const RenderContent = () => {
+    switch (loggedIn) {
+      case true:
+        return <NavApp ref={(navigator) => { setNavigator(navigator) }} />;
+      case false:
+        return <LoginScreen />;
+      case null:
+        return <LoginScreen />;
+      default:
+        return <Spinner />;
+    }
+  };
   return (
     <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
-      <App />
+      <RenderContent />  
     </Provider>
   );
-};
+}
+
+// With switch Navigator
+// const App = createAppContainer(switchNavigator);
+
+// export default () => {
+//   return (
+//     <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
+//       <App ref={(navigator) => { setNavigator(navigator) }}/>
+//     </Provider>
+//   );
+// };
 

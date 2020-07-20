@@ -4,6 +4,7 @@ import { EMAIL_CHANGED,
         LOGIN_USER_FAIL,
         LOGIN_USER } from './types';
 import { firebase } from '../services/firebase';
+import { navigate } from '../navigationRef';
 
 export const emailChanged = (text) => {
     return {
@@ -32,11 +33,12 @@ export const loginUser = ({ email, password }) => {
     };
 };
 
-const loginUserSuccess = (dispatch, user) => {
+const loginUserSuccess = async (dispatch, user) => {
     dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: user
     });
+    navigate('Account');
 };
 
 const loginUserFail = (dispatch) => {

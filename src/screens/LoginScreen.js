@@ -14,7 +14,7 @@ const LoginScreen = (props) => {
         emailChanged, 
         passwordChanged, 
         loginUser } = props;
-
+    
     const onLoginPress = () => {
         loginUser({email, password});
     };
@@ -104,7 +104,7 @@ const mapStateToProps = (state) => {
         email: state.authentication.email,
         password: state.authentication.password,
         error: state.authentication.error,
-        loading: state.authentication.loading
+        loading: state.authentication.loading,
     };
 };
 
