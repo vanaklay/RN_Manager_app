@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { emailChanged } from '../actions';
+import { emailChanged, passwordChanged, loginUser } from '../actions';
 
-const LoginScreen = ({ emailChanged }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+import { Spinner } from '../components/common';
+
+const LoginScreen = (props) => {
+    const { email, 
+        password, 
+        error,
+        loading,
+        emailChanged, 
+        passwordChanged, 
+        loginUser } = props;
 
     const onLoginPress = () => {
-        console.log('Submit Form');
+        loginUser({email, password});
     };
+
+    const renderButton = () => {
+        if (loading) {
+           return <Spinner />;
+        } else {
+            return <Text style={styles.buttonTitle}>Log in</Text>;
+        }
+    }
+
     return (
         <View style={styles.container}>
             <TextInput 
@@ -27,7 +43,7 @@ const LoginScreen = ({ emailChanged }) => {
                 style={styles.input}
                 placeholder='password'
                 placeholderTextColor="#aaaaaa"
-                onChangeText={(text) => setPassword(text)}
+                onChangeText={(text) => passwordChanged(text)}
                 value={password}
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
@@ -36,9 +52,10 @@ const LoginScreen = ({ emailChanged }) => {
             />
             <TouchableOpacity 
                 style={styles.button}
-                onPress={() => onLoginPress()}>
-                    <Text style={styles.buttonTitle}>Log in</Text>
-            </TouchableOpacity>
+                onPress={onLoginPress}>
+                { renderButton () }  
+                </TouchableOpacity>
+            { error ? <Text style={styles.error}>{error}</Text> : null}
         </View>
     );
 };
@@ -47,7 +64,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: '#eb5352'
     },
     input: {
         height: 48,
@@ -72,10 +90,22 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold'
+    },
+    error: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginTop: 16
     }
 
 });
 
-const mapStateToProps = () => {};
+const mapStateToProps = (state) => {
+    return {
+        email: state.authentication.email,
+        password: state.authentication.password,
+        error: state.authentication.error,
+        loading: state.authentication.loading
+    };
+};
 
-export default connect(null, { emailChanged })(LoginScreen);
+export default connect(mapStateToProps, { emailChanged, passwordChanged, loginUser })(LoginScreen);
