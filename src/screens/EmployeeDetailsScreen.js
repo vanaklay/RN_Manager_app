@@ -1,16 +1,16 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-const EmployeeDetailsScreen = () => {
+const EmployeeDetailsScreen = ({ navigation }) => {
     return (
         <View>
-            <Text>Employee Details Screen</Text>
+            <Text>{navigation.getParam('uid')}</Text>
         </View>
     );
 };
 
 EmployeeDetailsScreen.navigationOptions = {
-    headerBackTitle: 'Back to List',
+    headerBackTitle: 'Retour',
     headerStyle: { backgroundColor: '#eb5352' }
 };
 

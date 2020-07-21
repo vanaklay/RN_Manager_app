@@ -18,27 +18,29 @@ import AccountScreen from './src/screens/AccountScreen';
 import EmployeeListScreen from './src/screens/EmployeeListScreen';
 import EmployeeDetailsScreen from './src/screens/EmployeeDetailsScreen';
 import CreateScreen from './src/screens/CreateScreen';
+import EditScreen from './src/screens/EditScreen';
 
 import { Spinner } from './src/components/common';
 import { FontAwesome } from '@expo/vector-icons';
 
 const mainFlow = createStackNavigator(
   {
-  List: EmployeeListScreen,
+  Liste: EmployeeListScreen,
   Details: EmployeeDetailsScreen,
-  Create: CreateScreen
+  Creation: CreateScreen,
+  Edition: EditScreen
   }
 );
 
 mainFlow.navigationOptions = {
-  title: "List",
+  title: "Liste",
   tabBarIcon: <FontAwesome name="th-list" size={20}/>,
 };
 
 const bottomTabNavigator = createBottomTabNavigator(
   {
   mainFlow: mainFlow,
-  Account: AccountScreen
+  Utilisateur: AccountScreen
   },
   {
     tabBarOptions: {
@@ -82,14 +84,4 @@ export default function App() {
   );
 }
 
-// With switch Navigator
-// const App = createAppContainer(switchNavigator);
-
-// export default () => {
-//   return (
-//     <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
-//       <App ref={(navigator) => { setNavigator(navigator) }}/>
-//     </Provider>
-//   );
-// };
 

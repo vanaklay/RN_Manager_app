@@ -7,6 +7,7 @@
 - Implement React-Navigation-tabs
 - Implement Firebase Authentication for sign in, sign out forms
 - Implement Firebase Storage to store data 
+- Implement CRUD with React Native
 
 
 ## React Navigation Fix React_native 0.63

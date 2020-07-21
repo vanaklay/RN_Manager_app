@@ -4,5 +4,6 @@ export * from './CardItem';
 export * from './Header';
 export * from './Input';
 export * from './Spinner';
+export * from './TouchableList';
 
 

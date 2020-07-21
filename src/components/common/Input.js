@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     },
     label: {
         paddingHorizontal: 5,
+        width: 60,
         alignSelf: 'center',
         fontSize: 18,
         color: '#fff'

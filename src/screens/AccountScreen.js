@@ -13,7 +13,7 @@ const AccountScreen = () => {
         <TouchableOpacity 
             style={styles.button}
             onPress={onLogoutPress}>
-            <Text style={styles.buttonTitle}>Log Out</Text> 
+            <Text style={styles.buttonTitle}>Déconnexion</Text> 
         </TouchableOpacity>
         </SafeAreaView>
     );
