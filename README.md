@@ -5,6 +5,7 @@
 - Implement Redux-thunk to handle asynchronous action creator
 - Implement React-Navigation to navigate from one component to another
 - Implement React-Navigation-tabs
+- Implement React-Native-Communications to send text
 - Implement Firebase Authentication for sign in, sign out forms
 - Implement Firebase Storage to store data 
 - Implement CRUD with React Native

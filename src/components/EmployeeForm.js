@@ -21,7 +21,7 @@ const EmployeeForm = (props) => {
             <CardItem>
                 <Input 
                     label="Tel"
-                    placeholder="+336XXXXXXXX"
+                    placeholder="06XXXXXXXX"
                     value={phone}
                     onChangeText={(text) => stateUpdate({prop: 'phone', value: text})}
                     />

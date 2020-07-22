@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
@@ -16,7 +16,6 @@ import { setNavigator } from './src/navigationRef';
 import LoginScreen from './src/screens/LoginScreen';
 import AccountScreen from './src/screens/AccountScreen';
 import EmployeeListScreen from './src/screens/EmployeeListScreen';
-import EmployeeDetailsScreen from './src/screens/EmployeeDetailsScreen';
 import CreateScreen from './src/screens/CreateScreen';
 import EditScreen from './src/screens/EditScreen';
 
@@ -26,7 +25,6 @@ import { FontAwesome } from '@expo/vector-icons';
 const mainFlow = createStackNavigator(
   {
   Liste: EmployeeListScreen,
-  Details: EmployeeDetailsScreen,
   Creation: CreateScreen,
   Edition: EditScreen
   }

@@ -26,8 +26,8 @@ const EmployeeListScreen = (props) => {
                     renderItem={({item}) => {
                         return <TouchableList 
                             name={item.name}
-                            phone={item.phone}
                             shift={item.shift}
+                            phone={item.phone}
                             onPress={() => navigation.navigate('Edition', { item: item })}/>
                     }}
                 />;

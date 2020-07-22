@@ -1,19 +1,32 @@
 import _ from 'lodash';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
+import Communications from 'react-native-communications';
 
 import { connect } from 'react-redux';
-import { stateUpdate } from '../actions';
+import { stateUpdate, stateEdit, stateDelete } from '../actions';
 
-import { Button } from '../components/common';
+import { Button, Confirm } from '../components/common';
 import EmployeeForm from '../components/EmployeeForm';
 
 const EditScreen = (props) => {
-    const { navigation, stateUpdate, name, phone, shift } = props;
+    const { navigation, stateUpdate, name, phone, shift, stateEdit, stateDelete } = props;
     const item = navigation.getParam('item');
+    const [showModal, setShowModal] = useState(false);
     const onSaveButtonPress = () => {
-        console.log(name + ' ' + phone + ' ' + shift);
+        stateEdit({ name, phone, shift, uid: item.uid });
     };
+    const onTextPress = () => {
+        Communications.text(phone, `Votre prochain jour de travail : ${shift}`);
+    };
+    const onDeleteButtonPress = () => {
+        setShowModal(true);
+    };
+    const onAccept = () => {
+        stateDelete({ uid: item.uid });
+        setShowModal(false);
+    };
+    const onDecline = () => setShowModal(false);
     useEffect(() => {
         stateUpdate({ prop: 'name', value: item.name});
         stateUpdate({ prop: 'phone', value: item.phone});
@@ -23,6 +36,13 @@ const EditScreen = (props) => {
         <View style={styles.container}>
         <EmployeeForm />
         <Button onPress={onSaveButtonPress}>Sauvegarder</Button>
+        <Button onPress={onTextPress}>Envoyer un message</Button>
+        <Button onPress={onDeleteButtonPress}>Effacer ce contact</Button>
+        <Confirm 
+            visible={showModal}
+            onAccept={onAccept}
+            onDecline={onDecline}
+            >Etes-vous sur d'effacer ce contact ?</Confirm>
         </View>
     );
 };
@@ -44,4 +64,4 @@ const mapStateToProps = (state) => {
     const { name, phone, shift } = state.updateForm;
     return { name, phone, shift };
 };
-export default connect(mapStateToProps, { stateUpdate })(EditScreen);
+export default connect(mapStateToProps, { stateUpdate, stateEdit, stateDelete })(EditScreen);

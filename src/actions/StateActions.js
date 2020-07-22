@@ -1,4 +1,5 @@
-import { STATE_UPDATE, STATE_SAVE, DATA_FETCH_SUCCESS } from './types';
+import { STATE_UPDATE, STATE_SAVE, 
+            DATA_FETCH_SUCCESS, STATE_EDIT_SUCCESS } from './types';
 import { navigate } from '../navigationRef';
 
 import { firebase } from '../services/firebase';
@@ -40,5 +41,28 @@ export const dataFetch = () => {
             dispatch({ type: DATA_FETCH_SUCCESS, payload: snapshot.val() });
         });
 
+    };
+};
+
+export const stateEdit = ({ name, phone, shift, uid }) => {
+    const { currentUser } = firebase.auth();
+    return (dispatch) => {
+        firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+        .set({ name, phone, shift })
+        .then(() => {
+            dispatch({type: STATE_EDIT_SUCCESS});
+            navigate('Liste');
+        });
+    };
+};
+
+export const stateDelete = ({ uid }) => {
+    const { currentUser } = firebase.auth();
+    return () => {
+        firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+        .remove()
+        .then(() => {
+            navigate('Liste');
+        });
     };
 };
